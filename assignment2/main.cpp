@@ -14,7 +14,7 @@
 #include <string>
 #include <unordered_set>
 
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+std::string kYourName = "Jimmy Flower"; // Don't forget to change this!
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -29,6 +29,17 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  */
 std::set<std::string> get_applicants(std::string filename) {
   // STUDENT TODO: Implement this function.
+  std::set<std::string> name;
+  
+  std::ifstream ifs(filename);
+  
+  std::string line;
+  while(std::getline(ifs, line))
+  {
+	name.insert(line);
+  }
+  
+  return name;
 }
 
 /**
@@ -41,6 +52,15 @@ std::set<std::string> get_applicants(std::string filename) {
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
   // STUDENT TODO: Implement this function.
+  std::queue<const std::string*> names;
+  
+  for(const auto& it : students) //注意这里一定要&，否则只是一个复制，函数结束后会变成悬空指针
+  {
+	int pos = -1;
+	for(int i = 0 ; i < it.size(); i++) if(it[i] == ' ') pos = i;
+	if(it[0] == name[0] && it[pos + 1] == name[6]) names.push(&it);
+  }
+  return names;
 }
 
 /**
@@ -55,6 +75,20 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  */
 std::string get_match(std::queue<const std::string*>& matches) {
   // STUDENT TODO: Implement this function.
+  std::string answer = "NO MATCHES FOUND";
+ 
+  while(!matches.empty())
+  {
+	std::string name = *(matches.front());
+	matches.pop();
+	if((name.size() >= 5 && name.size() <= 13) || matches.empty())
+	{
+		answer = name;
+		break;
+	}
+  }
+  
+  return answer;
 }
 
 /* #### Please don't remove this line! #### */
