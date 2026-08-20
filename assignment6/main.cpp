@@ -85,7 +85,7 @@ main(int argc, char* argv[])
     Please pay special attention to the README here
     ********************************************************/
 
-    std::string output = course.transform([](const auto cour){ return "Found course: "+(cour.title)+","+(cour.number_of_units)+","+(cour.quarter); })
+    std::string output = course.transform([](const auto& cour){ return "Found course: "+(cour.title)+","+(cour.number_of_units)+","+(cour.quarter); })
 								.value_or("Course not found.");
 
     /********************************************************
